@@ -9,7 +9,20 @@
 </head>
 <body>
 
-    <?php echo $contenido; ?>
+    <div class="contenedor-app">
+        <!-- ---COLOCAREMOS LA IMAGEN QUE SE UTILIZARA EN CSS--- -->
+        <div class="imagen"></div>
+
+        <!-- ---SE MANDA A LLAMAR EL CONTENIDO DE LA APLICACION--- -->
+        <div class="app">
+            <?php echo $contenido; ?>
+        </div>
+    </div>
+
+
+
+
+    
             
 </body>
 </html>

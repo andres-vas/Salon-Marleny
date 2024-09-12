@@ -1,11 +1,12 @@
 <?php
 
 namespace Controllers;
-
+use MVC\Router;
 
 class LoginController {
-    public static function login() {
-        echo "DESDE LOGIN";
+    public static function login(Router $router) {
+        // MOSTRAR LA VISTA DEL LOGIN
+        $router->render('auth/login');
     }
 
     public static function logout() {

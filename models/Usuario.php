@@ -28,6 +28,52 @@ class Usuario extends ActiveRecord {
         $this->confirmado = $args['confirmado'] ?? 0;
         $this->token = $args['token'] ?? '';
     }
+
+
+    // MENSAJES DE VALIDACION PARA LA CREACION DE UNA CUENTA
+    public function validarNuevaCuenta() {
+        if(!$this->nombre){
+            self::$alertas['error'][] = 'El Nombre es Obligatorio';
+        }
+        if(!$this->apellido){
+            self::$alertas['error'][] = 'El Apellido es Obligatorio';
+        }
+        if(!$this->telefono){
+            self::$alertas['error'][] = 'El Telefono es Obligatorio';
+        }
+        if(!$this->email){
+            self::$alertas['error'][] = 'El E-mail es Obligatorio';
+        }
+        if(!$this->password){
+            self::$alertas['error'][] = 'El Password es Obligatorio';
+        }
+        if(strlen($this->password) < 6){
+            self::$alertas['error'][] = 'El Pasword Tiene que Contener Mas de 6 Carácteres';
+        }
+
+        return self::$alertas;
+    }
+
+    // REVISA SI EL USUSARIO YA EXISTE
+    public function existeUsuario() {
+        $query = " SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
+
+        $resultado = self::$db->query($query);
+
+        if($resultado->num_rows) {
+            self::$alertas['error'][] = 'El Usuario ya esta registrado';
+        }
+
+        return $resultado;
+    }
+    public function hashPassword(){
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function crearToken(){
+        $this->token = uniqid();
+    }
+
 }
 
 ?>

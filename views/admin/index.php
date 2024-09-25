@@ -30,7 +30,7 @@
             <?php 
                 $idCita = 0;
                 foreach( $citas as $key => $cita ) {
-
+   
                     if($idCita !== $cita->id) {
                         $total = 0;
             ?>
@@ -63,7 +63,7 @@
 
             <?php } 
           } // Fin de Foreach ?>
-    </ul>
+     </ul>
 </div>
 
 <?php

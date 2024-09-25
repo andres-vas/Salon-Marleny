@@ -236,7 +236,7 @@ function mostrarAlerta(mensaje, tipo, elemento, desaparece = true) {
             alerta.remove();
         }, 3000);
     }
-  
+
 }
 
 

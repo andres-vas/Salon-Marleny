@@ -82,6 +82,7 @@ class LoginController {
     }
 
     public static function confirmar(Router $router) {
+        $alertas = [];
         $router->render('auth/confirmar-cuenta', [
             'alertas'=> $alertas
         ]);

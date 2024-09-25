@@ -1,7 +1,7 @@
 <?php
-
-    foreach($alertas as $key => $mensajes):
-        foreach($mensajes as $mensaje):
+    if(isset($alertas) && is_array($alertas)):
+        foreach($alertas as $key => $mensajes):
+            foreach($mensajes as $mensaje):
 
 ?>
 
@@ -12,6 +12,7 @@
 <?php
         endforeach;
     endforeach;
-
-
+else:
+    echo '<div class="alerta info">No hay alertas para mostrar</div>';
+endif;
 ?>

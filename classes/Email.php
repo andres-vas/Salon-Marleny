@@ -23,8 +23,8 @@ class Email{
         $mail->Host = 'sandbox.smtp.mailtrap.io';
         $mail->SMTPAuth = true;
         $mail->Port = 2525;
-        $mail->Username = 'd5df1d836ccd62';
-        $mail->Password = '2a606b00d95736';
+        $mail->Username = 'ac4ba9ec507067';
+        $mail->Password = '5c1c37868513cf';
 
         $mail->setFrom('salonmarleny@marleny.com');
         $mail->addAddress('salonmarleny@marleny.com', 'SalonMarleny.com');
@@ -36,7 +36,7 @@ class Email{
         $mail->CharSet = 'UTF-8';
         $contenido = '<html>';
         $contenido .="<p><strong>Hola " . $this->nombre . "</strong> Has creado tu cuentqa en Salon Marlny, solo debes de confirmarla presionando el siguiene enlace</p>";
-        $contenido .="<p>Presiona Aqui: <a href='http://localhost:3000/confirmar-cuenta?token=". $this->token. "'>Confirmar Cuenta</a></p>";
+        $contenido .="<p>Presiona Aqui: <a href='http://localhost:8080/confirmar-cuenta?token=". $this->token. "'>Confirmar Cuenta</a></p>";
         $contenido .="<p>Si tu no solicitaste esta cuenta, puedes ignorar el mensaje</p>";
         $contenido .= '</html>';
         $mail->Body = $contenido;

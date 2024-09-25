@@ -23,8 +23,8 @@ class Email {
         $mail->Host = 'sandbox.smtp.mailtrap.io';
         $mail->SMTPAuth = true;
         $mail->Port = 2525;
-        $mail->Username = 'd5df1d836ccd62';
-        $mail->Password = '2a606b00d95736';
+        $mail->Username = 'ac4ba9ec507067';
+        $mail->Password = '5c1c37868513cf';
     
         $mail->setFrom('cuentas@appsalon.com');
         $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');
@@ -52,8 +52,8 @@ class Email {
         $mail->Host = 'sandbox.smtp.mailtrap.io';
         $mail->SMTPAuth = true;
         $mail->Port = 2525;
-        $mail->Username = 'd5df1d836ccd62';
-        $mail->Password = '2a606b00d95736';
+        $mail->Username = 'ac4ba9ec507067';
+        $mail->Password = '5c1c37868513cf';
     
         $mail->setFrom('cuentas@appsalon.com');
         $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');

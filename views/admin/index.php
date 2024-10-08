@@ -30,16 +30,17 @@
             <?php 
                 $idCita = 0;
                 foreach( $citas as $key => $cita ) {
-   
+
                     if($idCita !== $cita->id) {
                         $total = 0;
             ?>
             <li>
-                    <p>ID: <span><?php echo $cita->id; ?></span></p>
+                    <!--<p>ID: <span><//?php echo $cita->id; ?></span></p>-->
+                    <p>Fecha: <span><?php echo $cita->fecha; ?></span></p>
                     <p>Hora: <span><?php echo $cita->hora; ?></span></p>
                     <p>Cliente: <span><?php echo $cita->cliente; ?></span></p>
                     <p>Email: <span><?php echo $cita->email; ?></span></p>
-                    <p>Email: <span><?php echo $cita->telefono; ?></span></p>
+                    <p>Telefono: <span><?php echo $cita->telefono; ?></span></p>
 
                     <h3>Servicios</h3>
             <?php 

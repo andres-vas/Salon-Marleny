@@ -37,6 +37,11 @@ class Usuario extends ActiveRecord {
         if(!$this->apellido) {
             self::$alertas['error'][] = 'El Apellido es Obligatorio';
         }
+        if(!$this->telefono) {
+            self::$alertas['error'][] = 'El telefono es Obligatorio';
+        } elseif(!ctype_digit($this->telefono)) {
+            self::$alertas['error'][] = 'El teléfono solo puede contener números';
+        }
         if(!$this->email) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
@@ -46,8 +51,6 @@ class Usuario extends ActiveRecord {
         if(strlen($this->password) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
-
-
 
         return self::$alertas;
     }

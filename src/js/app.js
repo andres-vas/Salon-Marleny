@@ -185,9 +185,9 @@ function seleccionarFecha() {
 
         const dia = new Date(e.target.value).getUTCDay();
 
-        if( [6, 0].includes(dia) ) {
+        if( [0].includes(dia) ) {
             e.target.value = '';
-            mostrarAlerta('Fines de semana no permitidos', 'error', '.formulario');
+            mostrarAlerta('Los domingos no estamos atendiendo', 'error', '.formulario');
         } else {
             cita.fecha = e.target.value;
         }

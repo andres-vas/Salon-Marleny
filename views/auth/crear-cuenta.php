@@ -6,7 +6,7 @@
 ?>
 
 <form class="formulario" method="POST" action="/crear-cuenta">
-  
+
     <div class="campo">
         <label for="nombre">Nombre</label>
         <input

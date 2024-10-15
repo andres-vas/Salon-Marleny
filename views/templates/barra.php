@@ -10,5 +10,7 @@
         <a class="boton" href="/servicios/crear">Nuevo Servicio</a>
         <a class="boton" href="/marcas/crear">Nueva Marca</a>
         <a class="boton" href="/marcas">Ver Marcas</a>
+        <a class="boton" href="/tipo_descuentos/crear">Nuevo Descuento</a>
+        <a class="boton" href="/tipo_descuentos">Ver Descuentos</a>
     </div>
 <?php } ?>

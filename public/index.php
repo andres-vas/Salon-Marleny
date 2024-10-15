@@ -8,6 +8,7 @@ use Controllers\CitaController;
 use Controllers\LoginController;
 use Controllers\ServicioController;
 use Controllers\MarcaController;
+use Controllers\TipoDescuentoController;
 use MVC\Router;
 $router = new Router();
 
@@ -54,6 +55,14 @@ $router->post('/marcas/crear', [MarcaController::class, 'crear']);
 $router->get('/marcas/actualizar', [MarcaController::class, 'actualizar']);
 $router->post('/marcas/actualizar', [MarcaController::class, 'actualizar']);
 $router->post('/marcas/eliminar', [MarcaController::class, 'eliminar']);
+
+// CRUD de Servicios
+$router->get('/tipo_descuentos', [TipoDescuentoController::class, 'index']);
+$router->get('/tipo_descuentos/crear', [TipoDescuentoController::class, 'crear']);
+$router->post('/tipo_descuentos/crear', [TipoDescuentoController::class, 'crear']);
+$router->get('/tipo_descuentos/actualizar', [TipoDescuentoController::class, 'actualizar']);
+$router->post('/tipo_descuentos/actualizar', [TipoDescuentoController::class, 'actualizar']);
+$router->post('/tipo_descuentos/eliminar', [TipoDescuentoController::class, 'eliminar']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

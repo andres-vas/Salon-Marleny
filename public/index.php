@@ -7,6 +7,7 @@ use Controllers\APIController;
 use Controllers\CitaController;
 use Controllers\LoginController;
 use Controllers\ServicioController;
+use Controllers\MarcaController;
 use MVC\Router;
 $router = new Router();
 
@@ -45,6 +46,14 @@ $router->post('/servicios/crear', [ServicioController::class, 'crear']);
 $router->get('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/actualizar', [ServicioController::class, 'actualizar']);
 $router->post('/servicios/eliminar', [ServicioController::class, 'eliminar']);
+
+// CRUD de Servicios
+$router->get('/marcas', [MarcaController::class, 'index']);
+$router->get('/marcas/crear', [MarcaController::class, 'crear']);
+$router->post('/marcas/crear', [MarcaController::class, 'crear']);
+$router->get('/marcas/actualizar', [MarcaController::class, 'actualizar']);
+$router->post('/marcas/actualizar', [MarcaController::class, 'actualizar']);
+$router->post('/marcas/eliminar', [MarcaController::class, 'eliminar']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

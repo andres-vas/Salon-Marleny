@@ -8,5 +8,7 @@
         <a class="boton" href="/admin">Ver Citas</a>
         <a class="boton" href="/servicios">Ver Servicios</a>
         <a class="boton" href="/servicios/crear">Nuevo Servicio</a>
+        <a class="boton" href="/marcas/crear">Nueva Marca</a>
+        <a class="boton" href="/marcas">Ver Marcas</a>
     </div>
 <?php } ?>

@@ -64,7 +64,7 @@
 
             <?php } 
           } // Fin de Foreach ?>
-     </ul>
+    </ul>
 </div>
 
 <?php

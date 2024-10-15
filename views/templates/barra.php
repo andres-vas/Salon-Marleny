@@ -12,5 +12,7 @@
         <a class="boton" href="/marcas">Ver Marcas</a>
         <a class="boton" href="/tipo_descuentos/crear">Nuevo Descuento</a>
         <a class="boton" href="/tipo_descuentos">Ver Descuentos</a>
+        <a class="boton" href="/promociones/crear">Nueva Promocion</a>
+        <a class="boton" href="/promociones">Ver Promociones</a>
     </div>
 <?php } ?>

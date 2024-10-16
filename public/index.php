@@ -10,6 +10,7 @@ use Controllers\ServicioController;
 use Controllers\MarcaController;
 use Controllers\TipoDescuentoController;
 use Controllers\PromocionController;
+use Controllers\ProductoController;
 use MVC\Router;
 $router = new Router();
 
@@ -72,6 +73,14 @@ $router->post('/promociones/crear', [PromocionController::class, 'crear']);
 $router->get('/promociones/actualizar', [PromocionController::class, 'actualizar']);
 $router->post('/promociones/actualizar', [PromocionController::class, 'actualizar']);
 $router->post('/promociones/eliminar', [PromocionController::class, 'eliminar']);
+
+// CRUD de Servicios
+$router->get('/productos', [ProductoController::class, 'index']);
+$router->get('/productos/crear', [ProductoController::class, 'crear']);
+$router->post('/productos/crear', [ProductoController::class, 'crear']);
+$router->get('/productos/actualizar', [ProductoController::class, 'actualizar']);
+$router->post('/productos/actualizar', [ProductoController::class, 'actualizar']);
+$router->post('/productos/eliminar', [ProductoController::class, 'eliminar']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

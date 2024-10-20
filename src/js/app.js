@@ -1,6 +1,6 @@
 let paso = 1;
 const pasoInicial = 1;
-const pasoFinal = 4;
+const pasoFinal = 5;
 
 const cita = {
     id: '',
@@ -25,6 +25,7 @@ function iniciarApp() {
 
     consultarAPI(); // Consulta la API en el backend de PHP
     consultarProductosAPI(); // Consulta la API en el backend de PHP
+    consultarPromocionesAPI(); // Consulta la API en el backend de PHP
 
     idCliente();
     nombreCliente(); // Añade el nombre del cliente al objeto de cita
@@ -82,7 +83,7 @@ function botonesPaginador() {
     if(paso === 1) {
         paginaAnterior.classList.add('ocultar');
         paginaSiguiente.classList.remove('ocultar');
-    } else if (paso === 4) {
+    } else if (paso === 5) {
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.add('ocultar');
 
@@ -137,6 +138,18 @@ async function consultarProductosAPI() {
         const resultado = await fetch(url);
         const productos = await resultado.json();
         mostrarProductos(productos); // Llama a una función para mostrar los productos
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function consultarPromocionesAPI() {
+    try {
+        const url = 'http://localhost:3000/api/promociones'; // URL para la API de productos
+        const resultado = await fetch(url);
+        const promociones = await resultado.json();
+        mostrarPromociones(promociones); // Llama a una función para mostrar los productos
     
     } catch (error) {
         console.log(error);
@@ -239,6 +252,60 @@ function seleccionarProducto(producto) {
     // console.log(cita);
 }
 
+
+// RELACIOADO CON LOS PROMOCIONES 
+function mostrarPromociones(promociones) {
+    promociones.forEach( promocion => {
+        const {id, descripcion_promocion, fecha_inicio_promocion,  fecha_fin_promocion, id_tipo_descuento, producto_id, servicio_id} = promocion;
+
+        const nombrePromo = document.createElement('P');
+        nombrePromo.classList.add('name-promocion');
+        nombrePromo.textContent = descripcion_promocion;
+
+        const nombreProducto = document.createElement('P');
+        nombreProducto.classList.add('nombre-producto');
+        nombreProducto.textContent = `Q.${producto_id}`;
+
+        const nombreServicio = document.createElement('P');
+        nombreServicio.classList.add('nombre-servicio');
+        nombreServicio.textContent = `Q.${servicio_id}`;
+
+        const promocionDiv = document.createElement('DIV');
+        promocionDiv.classList.add('promocion');
+        promocionDiv.dataset.idPromocion = id;
+        promocionDiv.onclick = function() {
+            seleccionarPromocion(promocion);
+        }
+
+        promocionDiv.appendChild(nombrePromo);
+        promocionDiv.appendChild(nombreProducto);
+        promocionDiv.appendChild(nombreServicio);
+
+        document.querySelector('#promociones').appendChild(promocionDiv);
+
+    });
+}
+
+function seleccionarPromocion(promocion) {
+    const { id } = promocion;
+    const { promociones } = cita;
+
+    // Identificar el elemento al que se le da click
+    const divPromocion = document.querySelector(`[data-id-promocion="${id}"]`);
+
+    // Comprobar si un servicio ya fue agregado 
+    if( promociones.some( agregado => agregado.id === id ) ) {
+        // Eliminarlo
+        cita.promociones = promociones.filter( agregado => agregado.id !== id );
+        divPromocion.classList.remove('seleccionado');
+    } else {
+        // Agregarlo
+        cita.promociones = [...promociones, promocion];
+        divPromocion.classList.add('seleccionado');
+    }
+    // console.log(cita);
+}
+
 function idCliente() {
     cita.id = document.querySelector('#id').value;
 }
@@ -315,10 +382,10 @@ function mostrarResumen() {
         resumen.removeChild(resumen.firstChild);
     }
 
-    const { nombre, fecha, hora, servicios, productos } = cita;
+    const { nombre, fecha, hora, servicios, productos, promociones } = cita;
 
     // Verificar si se seleccionaron servicios o productos
-    if (Object.values(cita).includes('') || (servicios.length === 0 && productos.length === 0)) {
+    if (Object.values(cita).includes('') || (servicios.length === 0 && productos.length === 0 && promociones.length === 0)) {
         mostrarAlerta('Debes seleccionar al menos un servicio o producto, y completar fecha y hora', 'error', '.contenido-resumen', false);
         return;
     }
@@ -371,6 +438,26 @@ function mostrarResumen() {
         });
     }
 
+    // Mostrar resumen de Promociones si hay alguno
+    if (promociones.length > 0) {
+        const headingPromociones = document.createElement('H3');
+        headingPromociones.textContent = 'Resumen de Promociones';
+        resumen.appendChild(headingPromociones);
+
+        promociones.forEach(promocion => {
+            const { id, descripcion_promocion, fecha_inicio_promocion,  fecha_fin_promocion, id_tipo_descuento, producto_id, servicio_id } = promocion;
+            const contenedorPromocion = document.createElement('DIV');
+            contenedorPromocion.classList.add('contenedor-promocion');
+
+            const textoPromocion = document.createElement('P');
+            textoPromocion.textContent = descripcion_promocion;
+
+            contenedorPromocion.appendChild(textoPromocion);
+
+            resumen.appendChild(contenedorPromocion);
+        });
+    }
+
     // Mostrar resumen de Cita
     const headingCita = document.createElement('H3');
     headingCita.textContent = 'Resumen de Cita';
@@ -418,10 +505,11 @@ function seleccionarTipoPago() {
 
 
 async function reservarCita() {
-    const { nombre, fecha, hora, servicios, productos, id, tipoPagoId } = cita;
+    const { nombre, fecha, hora, servicios, productos, id, tipoPagoId, promociones } = cita;
 
     const idServicios = servicios.map(servicio => servicio.id);
     const idProductos = productos.map(producto => producto.id);
+    const idPromociones = promociones.map(promocion => promocion.id);  // Asegúrate de usar `promocion.id`
 
     const datos = new FormData();
     
@@ -438,6 +526,11 @@ async function reservarCita() {
     // Enviar productos como un array
     if (idProductos.length > 0) {
         idProductos.forEach(productoId => datos.append('productos[]', productoId));
+    }
+
+    // Enviar promociones como un array
+    if (idPromociones.length > 0) {
+        idPromociones.forEach(promocionId => datos.append('promociones[]', promocionId));  // Cambiado a `promocionId`
     }
 
     try {

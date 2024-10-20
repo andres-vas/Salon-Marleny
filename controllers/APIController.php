@@ -6,6 +6,7 @@ use Model\Cita;
 use Model\CitaServicio;
 use Model\Servicio;
 use Model\Producto;
+use Model\Promocion;
 
 class APIController {
 
@@ -18,6 +19,11 @@ class APIController {
     public static function indexPro() {
         $productos = Producto::all();
         echo json_encode($productos);
+    }
+
+    public static function indexPromo() {
+        $promociones = Promocion::all();
+        echo json_encode($promociones);
     }
 
     public static function guardar() {
@@ -40,7 +46,8 @@ class APIController {
                     $args = [
                         'citaId' => $id,
                         'servicioId' => $idServicio,
-                        'productoId' => null  // Deja productoId como nulo para servicios
+                        'productoId' => null,  // Deja productoId como nulo para servicios
+                        'promocionId' => null  // Deja productoId como nulo para servicios
                     ];
                     $citaServicio = new CitaServicio($args);
                     $citaServicio->guardar();
@@ -55,13 +62,32 @@ class APIController {
                     $args = [
                         'citaId' => $id,
                         'servicioId' => null, // Deja servicioId como nulo para productos
-                        'productoId' => $idProducto
+                        'productoId' => $idProducto,
+                        'promocionId' => null
                     ];
                     $citaProducto = new CitaServicio($args);
                     $citaProducto->guardar();
                 }
             }
         }
+
+        // Almacena las promociones con el ID de la Cita, si existen
+        if (isset($_POST['promociones']) && !empty($_POST['promociones'])) {
+            foreach ($_POST['promociones'] as $idPromocion) {
+                if (!empty($idPromocion)) { // Solo guarda si el idPromocion no está vacío
+                    $args = [
+                        'citaId' => $id,
+                        'servicioId' => null, // Deja servicioId como nulo para promociones
+                        'productoId' => null,
+                        'promocionId' => $idPromocion,  // Asegúrate de que este campo sea correcto
+                    ];
+                    $citaPromocion = new CitaServicio($args);
+                    $citaPromocion->guardar();
+                }
+            }
+        }
+
+
     
         // Enviar respuesta en formato JSON
         echo json_encode(['resultado' => $resultado]);

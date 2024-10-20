@@ -63,7 +63,7 @@
                     </form>
 
             <?php } 
-          } // Fin de Foreach ?>
+          } // Fin de Foreach prueba ?>
     </ul>
 </div>
 

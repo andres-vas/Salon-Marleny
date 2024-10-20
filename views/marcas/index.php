@@ -7,14 +7,14 @@
 
 <ul class="marcas">
     <?php foreach($marcas as $marca) { ?>
-        <h3>Informacion Marca</h3>
+        <h3>Información Marca</h3>
         <li>      
-            <p>Nombre: <span><?php echo $marca->nombre_marca; ?></span> </p>
-            <!--<p>Pagina Marca: <span><?php echo $marca->url_marca; ?></span> </p>-->
+            <p>Nombre: <span><?php echo $marca->nombre_marca; ?></span></p>
+            <!--<p>Pagina Marca: <span><?php echo $marca->url_marca; ?></span></p>-->
 
             <!-- Mostrar imagen de la marca -->
             <?php if(!empty($marca->imagen_marca)) { ?>
-                <p><img src="/img/marcas/<?php echo $marca->imagen_marca; ?>" alt="Imagen de la marca <?php echo $marca->nombre_marca; ?>" class="imagen-marca"></p>
+                <p><img src="/img/marcas/<?php echo $marca->imagen_marca; ?>" class="imagen-marca"></p>
             <?php } ?>
 
             <div class="acciones">

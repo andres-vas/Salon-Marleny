@@ -36,41 +36,55 @@ export async function imagenes(done) {
     const buildDir = './public/build/img';
     const images = await glob('./src/img/**/*');
 
-    images.forEach(file => {
+    // Procesa cada imagen usando await para asegurarse de que cada una sea procesada correctamente
+    for (const file of images) {
         const relativePath = path.relative(srcDir, path.dirname(file));
         const outputSubDir = path.join(buildDir, relativePath);
-        procesarImagenes(file, outputSubDir);
-    });
+        await procesarImagenes(file, outputSubDir); // Usar await aquí
+    }
     done();
 }
 
-function procesarImagenes(file, outputSubDir) {
+async function procesarImagenes(file, outputSubDir) {
     if (!fs.existsSync(outputSubDir)) {
         fs.mkdirSync(outputSubDir, { recursive: true });
     }
 
     const baseName = path.basename(file, path.extname(file));
-    const extName = path.extname(file);
+    const extName = path.extname(file).toLowerCase();
 
-    if (extName.toLowerCase() === '.svg') {
+    // Procesar imágenes SVG directamente
+    if (extName === '.svg') {
         const outputFile = path.join(outputSubDir, `${baseName}${extName}`);
         fs.copyFileSync(file, outputFile);
-    } else {
+        console.log(`Archivo SVG copiado: ${outputFile}`);
+    } 
+    // Procesar otros formatos de imagen
+    else if (['.jpg', '.jpeg', '.png', '.webp'].includes(extName)) {
         const outputFile = path.join(outputSubDir, `${baseName}${extName}`);
         const outputFileWebp = path.join(outputSubDir, `${baseName}.webp`);
         const outputFileAvif = path.join(outputSubDir, `${baseName}.avif`);
         const options = { quality: 80 };
 
-        sharp(file).jpeg(options).toFile(outputFile);
-        sharp(file).webp(options).toFile(outputFileWebp);
-        sharp(file).avif().toFile(outputFileAvif);
+        try {
+            await sharp(file).jpeg(options).toFile(outputFile);
+            console.log(`Imagen procesada: ${outputFile}`);
+            await sharp(file).webp(options).toFile(outputFileWebp);
+            console.log(`Imagen procesada en WebP: ${outputFileWebp}`);
+            await sharp(file).avif().toFile(outputFileAvif);
+            console.log(`Imagen procesada en AVIF: ${outputFileAvif}`);
+        } catch (err) {
+            console.error(`Error procesando la imagen ${file}:`, err);
+        }
+    } else {
+        console.log(`Formato no soportado: ${extName}`);
     }
 }
 
 export function dev() {
     watch(paths.scss, css);
     watch(paths.js, js);
-    watch('src/img/**/*.{png,jpg}', imagenes);
+    watch('src/img/**/*.{png,jpg,jpeg,webp}', imagenes); // Incluye todos los formatos de imagen soportados
 }
 
 export default series(js, css, imagenes, dev);

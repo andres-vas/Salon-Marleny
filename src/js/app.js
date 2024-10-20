@@ -9,6 +9,7 @@ const cita = {
     hora: '',
     servicios: [],
     productos: [],
+    promociones: []
 }
 
 document.addEventListener('DOMContentLoaded', function() {

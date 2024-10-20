@@ -4,7 +4,7 @@ namespace Model;
 
 class Promocion extends ActiveRecord {
     protected static $tabla = 'promocion';
-    protected static $columnasDB = ['id', 'descripcion_promocion', 'fecha_inicio_promocion', 'fecha_fin_promocion', 'id_tipo_descuento', 'activo_descuento'];
+    protected static $columnasDB = ['id', 'descripcion_promocion', 'fecha_inicio_promocion', 'fecha_fin_promocion', 'id_tipo_descuento', 'activo_descuento', 'producto_id','servicio_id'];
 
     public $id;
     public $descripcion_promocion;
@@ -12,6 +12,8 @@ class Promocion extends ActiveRecord {
     public $fecha_fin_promocion;
     public $id_tipo_descuento;
     public $activo_descuento;
+    public $producto_id;
+    public $servicio_id;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
@@ -20,6 +22,8 @@ class Promocion extends ActiveRecord {
         $this->fecha_fin_promocion = $args['fecha_fin_promocion'] ?? '';
         $this->id_tipo_descuento = $args['id_tipo_descuento'] ?? '';
         $this->activo_descuento = $args['activo_descuento'] ?? '';
+        $this->producto_id = $args['producto_id'] ?? '';
+        $this->servicio_id = $args['producto_id'] ?? '';
     }
 
     public function validar() {
@@ -35,6 +39,12 @@ class Promocion extends ActiveRecord {
             self::$alertas['error'][] = 'La fecha de fin es obligatoria';
         }
         if (!$this->id_tipo_descuento) {
+            self::$alertas['error'][] = 'El tipo de descuento es obligatorio';
+        }
+        if (!$this->producto_id) {
+            self::$alertas['error'][] = 'La fecha de fin es obligatoria';
+        }
+        if (!$this->servicio_id) {
             self::$alertas['error'][] = 'El tipo de descuento es obligatorio';
         }
 

@@ -10,8 +10,9 @@
     <nav class="tabs">
         <button class="actual" type="button" data-paso="1">Servicios</button>
         <button class="button" type="button" data-paso="2">Productos</button>
-        <button type="button" data-paso="3">Información Cita</button>
-        <button type="button" data-paso="4">Resumen</button>
+        <button class="button" type="button" data-paso="3">Promociones</button>
+        <button type="button" data-paso="4">Información Cita</button>
+        <button type="button" data-paso="5">Resumen</button>
     </nav>
 
 
@@ -28,6 +29,12 @@
     </div>
 
     <div id="paso-3" class="seccion">
+        <h2>Promociones</h2>
+        <p class="text-center">Selecciona una de Nuestras Promociones Disponibles</p>
+        <div id="promociones" class="listado-promociones"></div>
+    </div>
+
+    <div id="paso-4" class="seccion">
         <h2>Tus Datos y Cita</h2>
         <p class="text-center">Coloca tus datos y fecha de tu cita</p>
 
@@ -79,7 +86,7 @@
 
         </form>
     </div>
-    <div id="paso-4" class="seccion contenido-resumen">
+    <div id="paso-5" class="seccion contenido-resumen">
         <h2>Resumen</h2>
         <p class="text-center">Verifica que la información sea correcta</p>
     </div>

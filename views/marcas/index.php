@@ -7,9 +7,10 @@
 
 <ul class="marcas">
     <?php foreach($marcas as $marca) { ?>
-        <li>
+        <h3>Informacion Marca</h3>
+        <li>      
             <p>Nombre: <span><?php echo $marca->nombre_marca; ?></span> </p>
-            <p>Precio: <span><?php echo $marca->imagen_marca; ?></span> </p>
+            <!--<p>Pagina Marca: <span><?php echo $marca->url_marca; ?></span> </p>-->
 
             <div class="acciones">
                 <a class="boton" href="/marcas/actualizar?id=<?php echo $marca->id; ?>">Actualizar</a>

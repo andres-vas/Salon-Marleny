@@ -10,12 +10,12 @@
 </div>
 
 <div class="campo">
-    <label for="imagen_marca">Imagn Marca</label>
+    <label for="url_marca">Pagina Marca</label>
     <input 
         type="text"
-        id="imagen_marca"
-        placeholder="imagen Marca"
-        name="imagen_marca"
-        value="<?php echo $marca->imagen_marca; ?>"
+        id="url_marca"
+        placeholder="Pagina Marca"
+        name="url_marca"
+        value="<?php echo $marca->url_marca; ?>"
     />
 </div>

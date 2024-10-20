@@ -42,20 +42,21 @@
                     <p>Email: <span><?php echo $cita->email; ?></span></p>
                     <p>Telefono: <span><?php echo $cita->telefono; ?></span></p>
 
-                    <h3>Servicios</h3>
+                    <h3>Servicios y Productos</h3>
             <?php 
                 $idCita = $cita->id;
             } // Fin de IF 
-                $total += $cita->precio;
+                $total += ($cita->precio + $cita->precioPro);
             ?>
                     <p class="servicio"><?php echo $cita->servicio . " " . $cita->precio; ?></p>
-            
+                    <p class="servicio"><?php echo $cita->nombrePro . " " . $cita->precioPro; ?></p>
+
             <?php 
                 $actual = $cita->id;
                 $proximo = $citas[$key + 1]->id ?? 0;
 
                 if(esUltimo($actual, $proximo)) { ?>
-                    <p class="total">Total: <span>$ <?php echo $total; ?></span></p>
+                    <p class="total">Total: <span>Q.  <?php echo $total; ?></span></p>
 
                     <form action="/api/eliminar" method="POST">
                         <input type="hidden" name="id" value="<?php echo $cita->id; ?>">

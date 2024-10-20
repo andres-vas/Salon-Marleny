@@ -1,7 +1,7 @@
 <?php
 
 // Conexión a la base de datos utilizando mysqli_connect
-$db = mysqli_connect('localhost', 'root', 'root', 'salon_marleny', 33065);
+$db = mysqli_connect('localhost', 'root', '', 'salon_marleny');
 
 if (!$db) {
     // Mostrar un mensaje de error si no se puede conectar a la base de datos

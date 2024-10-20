@@ -1,13 +1,14 @@
 let paso = 1;
 const pasoInicial = 1;
-const pasoFinal = 3;
+const pasoFinal = 4;
 
 const cita = {
     id: '',
     nombre: '',
     fecha: '',
     hora: '',
-    servicios: []
+    servicios: [],
+    productos: [],
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -22,6 +23,7 @@ function iniciarApp() {
     paginaAnterior();
 
     consultarAPI(); // Consulta la API en el backend de PHP
+    consultarProductosAPI(); // Consulta la API en el backend de PHP
 
     idCliente();
     nombreCliente(); // Añade el nombre del cliente al objeto de cita
@@ -78,7 +80,7 @@ function botonesPaginador() {
     if(paso === 1) {
         paginaAnterior.classList.add('ocultar');
         paginaSiguiente.classList.remove('ocultar');
-    } else if (paso === 3) {
+    } else if (paso === 4) {
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.add('ocultar');
 
@@ -101,6 +103,7 @@ function paginaAnterior() {
         botonesPaginador();
     })
 }
+
 function paginaSiguiente() {
     const paginaSiguiente = document.querySelector('#siguiente');
     paginaSiguiente.addEventListener('click', function() {
@@ -113,12 +116,25 @@ function paginaSiguiente() {
 }
 
 async function consultarAPI() {
-
     try {
         const url = 'http://localhost:3000/api/servicios';
         const resultado = await fetch(url);
         const servicios = await resultado.json();
+        
         mostrarServicios(servicios);
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+async function consultarProductosAPI() {
+    try {
+        const url = 'http://localhost:3000/api/productos'; // URL para la API de productos
+        const resultado = await fetch(url);
+        const productos = await resultado.json();
+        mostrarProductos(productos); // Llama a una función para mostrar los productos
     
     } catch (error) {
         console.log(error);
@@ -135,7 +151,7 @@ function mostrarServicios(servicios) {
 
         const precioServicio = document.createElement('P');
         precioServicio.classList.add('precio-servicio');
-        precioServicio.textContent = `$${precio}`;
+        precioServicio.textContent = `Q. ${precio}`;
 
         const servicioDiv = document.createElement('DIV');
         servicioDiv.classList.add('servicio');
@@ -168,6 +184,55 @@ function seleccionarServicio(servicio) {
         // Agregarlo
         cita.servicios = [...servicios, servicio];
         divServicio.classList.add('seleccionado');
+    }
+    // console.log(cita);
+}
+
+
+// RELACIOADO CON LOS PRODUCTOS 
+function mostrarProductos(productos) {
+    productos.forEach( producto => {
+        const { id, name_producto, precio_producto } = producto;
+
+        const nombreProducto = document.createElement('P');
+        nombreProducto.classList.add('name-producto');
+        nombreProducto.textContent = name_producto;
+
+        const precioProducto = document.createElement('P');
+        precioProducto.classList.add('precio-producto');
+        precioProducto.textContent = `Q.${precio_producto}`;
+
+        const productoDiv = document.createElement('DIV');
+        productoDiv.classList.add('producto');
+        productoDiv.dataset.idProducto = id;
+        productoDiv.onclick = function() {
+            seleccionarProducto(producto);
+        }
+
+        productoDiv.appendChild(nombreProducto);
+        productoDiv.appendChild(precioProducto);
+
+        document.querySelector('#productos').appendChild(productoDiv);
+
+    });
+}
+
+function seleccionarProducto(producto) {
+    const { id } = producto;
+    const { productos } = cita;
+
+    // Identificar el elemento al que se le da click
+    const divProducto = document.querySelector(`[data-id-producto="${id}"]`);
+
+    // Comprobar si un servicio ya fue agregado 
+    if( productos.some( agregado => agregado.id === id ) ) {
+        // Eliminarlo
+        cita.productos = productos.filter( agregado => agregado.id !== id );
+        divProducto.classList.remove('seleccionado');
+    } else {
+        // Agregarlo
+        cita.productos = [...productos, producto];
+        divProducto.classList.add('seleccionado');
     }
     // console.log(cita);
 }
@@ -244,45 +309,67 @@ function mostrarResumen() {
     const resumen = document.querySelector('.contenido-resumen');
 
     // Limpiar el Contenido de Resumen
-    while(resumen.firstChild) {
+    while (resumen.firstChild) {
         resumen.removeChild(resumen.firstChild);
     }
 
-    if(Object.values(cita).includes('') || cita.servicios.length === 0 ) {
-        mostrarAlerta('Faltan datos de Servicios, Fecha u Hora', 'error', '.contenido-resumen', false);
+    const { nombre, fecha, hora, servicios, productos } = cita;
 
+    // Verificar si se seleccionaron servicios o productos
+    if (Object.values(cita).includes('') || (servicios.length === 0 && productos.length === 0)) {
+        mostrarAlerta('Debes seleccionar al menos un servicio o producto, y completar fecha y hora', 'error', '.contenido-resumen', false);
         return;
-    } 
+    }
 
-    // Formatear el div de resumen
-    const { nombre, fecha, hora, servicios } = cita;
+    // Mostrar resumen de Servicios si hay alguno
+    if (servicios.length > 0) {
+        const headingServicios = document.createElement('H3');
+        headingServicios.textContent = 'Resumen de Servicios';
+        resumen.appendChild(headingServicios);
 
+        servicios.forEach(servicio => {
+            const { id, precio, nombre } = servicio;
+            const contenedorServicio = document.createElement('DIV');
+            contenedorServicio.classList.add('contenedor-servicio');
 
+            const textoServicio = document.createElement('P');
+            textoServicio.textContent = nombre;
 
-    // Heading para Servicios en Resumen
-    const headingServicios = document.createElement('H3');
-    headingServicios.textContent = 'Resumen de Servicios';
-    resumen.appendChild(headingServicios);
+            const precioServicio = document.createElement('P');
+            precioServicio.innerHTML = `<span>Precio:</span> Q${precio}`;
 
-    // Iterando y mostrando los servicios
-    servicios.forEach(servicio => {
-        const { id, precio, nombre } = servicio;
-        const contenedorServicio = document.createElement('DIV');
-        contenedorServicio.classList.add('contenedor-servicio');
+            contenedorServicio.appendChild(textoServicio);
+            contenedorServicio.appendChild(precioServicio);
 
-        const textoServicio = document.createElement('P');
-        textoServicio.textContent = nombre;
+            resumen.appendChild(contenedorServicio);
+        });
+    }
 
-        const precioServicio = document.createElement('P');
-        precioServicio.innerHTML = `<span>Precio:</span> $${precio}`;
+    // Mostrar resumen de Productos si hay alguno
+    if (productos.length > 0) {
+        const headingProductos = document.createElement('H3');
+        headingProductos.textContent = 'Resumen de Productos';
+        resumen.appendChild(headingProductos);
 
-        contenedorServicio.appendChild(textoServicio);
-        contenedorServicio.appendChild(precioServicio);
+        productos.forEach(producto => {
+            const { id, name_producto, precio_producto } = producto;
+            const contenedorProducto = document.createElement('DIV');
+            contenedorProducto.classList.add('contenedor-producto');
 
-        resumen.appendChild(contenedorServicio);
-    });
+            const textoProducto = document.createElement('P');
+            textoProducto.textContent = name_producto;
 
-    // Heading para Cita en Resumen
+            const precioProducto = document.createElement('P');
+            precioProducto.innerHTML = `<span>Precio:</span> Q${precio_producto}`;
+
+            contenedorProducto.appendChild(textoProducto);
+            contenedorProducto.appendChild(precioProducto);
+
+            resumen.appendChild(contenedorProducto);
+        });
+    }
+
+    // Mostrar resumen de Cita
     const headingCita = document.createElement('H3');
     headingCita.textContent = 'Resumen de Cita';
     resumen.appendChild(headingCita);
@@ -293,12 +380,11 @@ function mostrarResumen() {
     // Formatear la fecha en español
     const fechaObj = new Date(fecha);
     const mes = fechaObj.getMonth();
-    const dia = fechaObj.getDate() + 2;
+    const dia = fechaObj.getDate();
     const year = fechaObj.getFullYear();
 
-    const fechaUTC = new Date( Date.UTC(year, mes, dia));
-    
-    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+    const fechaUTC = new Date(Date.UTC(year, mes, dia));
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const fechaFormateada = fechaUTC.toLocaleDateString('es-MX', opciones);
 
     const fechaCita = document.createElement('P');
@@ -316,29 +402,34 @@ function mostrarResumen() {
     resumen.appendChild(nombreCliente);
     resumen.appendChild(fechaCita);
     resumen.appendChild(horaCita);
-
     resumen.appendChild(botonReservar);
 }
 
-async function reservarCita() {
-    
-    const { nombre, fecha, hora, servicios, id } = cita;
 
-    const idServicios = servicios.map( servicio => servicio.id );
-    // console.log(idServicios);
+async function reservarCita() {
+    const { nombre, fecha, hora, servicios, productos, id } = cita;
+
+    const idServicios = servicios.map(servicio => servicio.id);
+    const idProductos = productos.map(producto => producto.id);
 
     const datos = new FormData();
     
     datos.append('fecha', fecha);
-    datos.append('hora', hora );
+    datos.append('hora', hora);
     datos.append('usuarioId', id);
-    datos.append('servicios', idServicios);
+    
+    // Enviar servicios como un array
+    if (idServicios.length > 0) {
+        idServicios.forEach(servicioId => datos.append('servicios[]', servicioId));
+    }
 
-    // console.log([...datos]);
+    // Enviar productos como un array
+    if (idProductos.length > 0) {
+        idProductos.forEach(productoId => datos.append('productos[]', productoId));
+    }
 
     try {
-        // Petición hacia la api
-        const url = 'http://localhost:3000/api/citas'
+        const url = 'http://localhost:3000/api/citas';
         const respuesta = await fetch(url, {
             method: 'POST',
             body: datos
@@ -347,27 +438,24 @@ async function reservarCita() {
         const resultado = await respuesta.json();
         console.log(resultado);
         
-        if(resultado.resultado) {
+        if (resultado.resultado) {
             Swal.fire({
                 icon: 'success',
                 title: 'Cita Creada',
                 text: 'Tu cita fue creada correctamente',
                 button: 'OK'
-            }).then( () => {
+            }).then(() => {
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
-            })
+            });
         }
     } catch (error) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Hubo un error al guardar la cita'
-        })
+        });
     }
-
-    
-    // console.log([...datos]);
-
 }
+

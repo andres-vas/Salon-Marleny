@@ -6,18 +6,28 @@
 ?>
 
 <div id="app">
+
     <nav class="tabs">
         <button class="actual" type="button" data-paso="1">Servicios</button>
-        <button type="button" data-paso="2">Información Cita</button>
-        <button type="button" data-paso="3">Resumen</button>
+        <button class="button" type="button" data-paso="2">Productos</button>
+        <button type="button" data-paso="3">Información Cita</button>
+        <button type="button" data-paso="4">Resumen</button>
     </nav>
+
 
     <div id="paso-1" class="seccion">
         <h2>Servicios</h2>
-        <p class="text-center">Elige tus servicios a continuación</p>
+        <p class="text-center">Elige tus Servicios a Continuación</p>
         <div id="servicios" class="listado-servicios"></div>
     </div>
+
     <div id="paso-2" class="seccion">
+        <h2>Productos</h2>
+        <p class="text-center">Selecciona tus Produtos a Continuación</p>
+        <div id="productos" class="listado-productos"></div>
+    </div>
+
+    <div id="paso-3" class="seccion">
         <h2>Tus Datos y Cita</h2>
         <p class="text-center">Coloca tus datos y fecha de tu cita</p>
 
@@ -53,7 +63,7 @@
 
         </form>
     </div>
-    <div id="paso-3" class="seccion contenido-resumen">
+    <div id="paso-4" class="seccion contenido-resumen">
         <h2>Resumen</h2>
         <p class="text-center">Verifica que la información sea correcta</p>
     </div>

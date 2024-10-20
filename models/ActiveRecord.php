@@ -141,21 +141,33 @@ class ActiveRecord {
     public function crear() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
-
-        // Insertar en la base de datos
+    
+        // Crear la consulta SQL con manejo de valores NULL
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
-        $query .= " ) VALUES (' "; 
-        $query .= join("', '", array_values($atributos));
-        $query .= " ') ";
+        $query .= " ) VALUES (";
         
-        // Resultado de la consulta
+        // Agregar manejo de NULL para valores vacíos
+        $valores = [];
+        foreach(array_values($atributos) as $valor) {
+            if ($valor === '') {
+                $valores[] = "NULL";  // Si el valor está vacío, usar NULL
+            } else {
+                $valores[] = "'$valor'"; // De lo contrario, usar el valor con comillas
+            }
+        }
+        $query .= join(', ', $valores);
+        $query .= " ) ";
+        
+        // Ejecutar la consulta
         $resultado = self::$db->query($query);
         return [
-           'resultado' =>  $resultado,
-           'id' => self::$db->insert_id
+            'resultado' =>  $resultado,
+            'id' => self::$db->insert_id
         ];
     }
+    
+    
 
     // Actualizar el registro
     public function actualizar() {

@@ -2,14 +2,14 @@
 @use 'base/mixins' as m;
 
 .tabs {
-
     @include m.tablet {
         display: flex;
-
+        justify-content: space-evenly; // Asegura una distribución uniforme de los botones de las pestañas
+        flex-wrap: wrap; // Permite que los botones se ajusten en múltiples filas si es necesario
     }
 
     button {
-        background-color: v.$azul;
+        background-color: v.$azul; // Color principal para botones inactivos
         border: none;
         color: v.$blanco;
         padding: 1rem;
@@ -18,15 +18,20 @@
         margin-bottom: 1rem;
         text-transform: uppercase;
         font-weight: v.$bold;
-        transition: background-color 300ms ease;
+        transition: background-color 300ms ease, box-shadow 300ms ease; // Transición para color de fondo y sombra
 
-        &:hover {
+        &:hover, &:focus {
             cursor: pointer;
-            background-color: darken(v.$azul, 10%);
+            background-color: darken(v.$azul, 10%); // Oscurece el botón al interactuar
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Sombra para resaltar el botón
         }
+
         &.actual {
-            background-color: v.$blanco;
-            color: v.$azul;
+            background-color: v.$blanco; // Botón activo con fondo blanco
+            color: v.$azul; // Texto en color principal
+            border-bottom: 3px solid darken(v.$azul, 10%); // Borde para indicar la pestaña activa
+            margin-bottom: 0; // Elimina el margen inferior para alinear visualmente con el contenido
+            box-shadow: none; // No sombra para el botón activo
         }
     }
 }

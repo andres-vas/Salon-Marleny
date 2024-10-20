@@ -2,56 +2,53 @@
 @use 'base/mixins' as m;
 
 .contenedor-app {
+    display: grid; // Establece un diseño de grid para todas las vistas
+    grid-template-columns: 1fr; // Columna única por defecto
+    min-height: 100vh; // Asegura que el contenedor ocupe al menos la altura de la pantalla
+
     @include m.tablet {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        min-height: 100vh;
+        grid-template-columns: repeat(2, 1fr); // Dos columnas en tabletas y dispositivos mayores
     }
 
     .imagen {
         height: 20rem;
         background-image: url(../img/SM4.webp);
         background-size: cover;
-        background-position: center center;
+        background-position: center;
+
         @include m.tablet {
-            height: auto;
+            height: auto; // Ajuste de altura automática para adaptarse a diferentes tamaños de pantalla
         }
     }
 
     .app {
-        width: 100%;
-        margin: 0 auto;
-        padding: 3rem 0;
+        width: 100%; // Asegura que el contenido use todo el ancho disponible
+        margin: 0 auto; // Centra el contenido horizontalmente
+        padding: 3rem 0; // Añade un padding vertical para separación
+
         @include m.tablet {
-            overflow: scroll;
+            padding: 3rem; // Aumenta el padding en dispositivos más grandes
+            overflow: auto; // Permite el desplazamiento si el contenido es muy largo
         }
     }
 }
 
-.barra {
-    margin: v.$separacion 0;
-
-    @include m.tablet {
-        display: flex;
-        justify-content: space-between;
-        align-items:center;
-    }
+.barra,
+.barra-servicios {
+    display: flex; // Flexbox para alinear elementos consistentemente
+    justify-content: space-between; // Separa los elementos equitativamente
+    align-items: center; // Alinea los elementos verticalmente
+    margin-bottom: v.$separacion; // Espaciado uniforme después de la barra
 
     .boton {
-        @include m.boton(v.$negro, v.$blanco);
-        margin: 0;
+        @include m.boton(v.$negro, v.$blanco); // Uso del mixin para estilos de botón consistentes
+        margin: 0; // Elimina el margen para un alineamiento limpio
+        &:first-of-type {
+            margin-right: 1rem; // Añade margen a la derecha del primer botón solo si hay múltiples botones
+        }
     }
 }
 
 .barra-servicios {
-    margin-bottom: v.$separacion;
-
-    @include m.tablet {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .boton {
-        margin: 0 0 1rem 0;
-    }
+    margin-top: v.$separacion; // Añade margen superior para separarlo de otros elementos
 }

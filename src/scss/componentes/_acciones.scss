@@ -1,18 +1,28 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 
+.acciones {
+    margin-top: v.$separacion; // Usa la variable de separación para el margen superior
 
-.acciones{
-    margin-top: v.$separacion;
-    @include m.tablet{
+    @include m.tablet {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; // Asegura que los enlaces se distribuyan de manera uniforme en tablets y dispositivos más grandes
+        flex-wrap: wrap; // Permite que los enlaces se ajusten correctamente en distintos tamaños de pantalla
     }
-    a{
-        color: v.$blanco;
-        display: block;
-        margin-bottom: calc(v.$separacion / 2);
-        text-align: center;
 
+    a {
+        color: #C9E9D2; // Usa el verde claro para los enlaces
+        display: block;
+        margin-bottom: calc(v.$separacion / 2); // Usa la variable de separación para el margen inferior
+        text-align: center;
+        padding: 10px 20px; // Añade padding para mejorar la tocabilidad en dispositivos móviles
+        border-radius: 5px; // Bordes redondeados para un look más moderno
+        transition: background-color 0.3s, color 0.3s; // Transición suave para cambios de color
+
+        &:hover, &:focus {
+            background-color: #789DBC; // Azul para el fondo al pasar el mouse o enfocar
+            color: #FFE3E3; // Rosa claro para el texto
+            text-decoration: none; // Remueve la subraya para un look más limpio
+        }
     }
 }

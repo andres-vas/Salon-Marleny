@@ -6,7 +6,13 @@
 
     li {
         padding: 1rem;
-        border-top: 1px solid v.$blanco;
+        border-top: 1px solid v.$gris-claro; // Cambio de blanco a gris claro para suavizar el contraste
+        background-color: v.$negro; // Añade un fondo para mejorar la legibilidad
+        transition: background-color 0.3s; // Transición suave para el efecto de hover
+
+        &:hover {
+            background-color: darken(v.$negro, 5%); // Oscurecimiento sutil al pasar el ratón
+        }
 
         p {
             font-weight: v.$bold;
@@ -16,20 +22,33 @@
         span,
         .servicio {
             font-weight: v.$regular;
-            color: v.$blanco;
+            color: v.$gris; // Cambio de blanco a gris para mejor legibilidad
         }
-
     }
 }
 
 .servicios {
-    @extend .citas;
+    @extend .citas; // Aprovecha los estilos de citas para mantener la coherencia
 
     .acciones {
-        margin: 0;
+        display: flex;
+        justify-content: space-between; // Distribuye los elementos de acción uniformemente
+        padding: 1rem 0; // Añade padding para una mejor separación visual
+        background-color: v.$gris-oscuro; // Fondo distinto para destacar la sección de acciones
+        border-top: 1px solid v.$gris; // Borde para definir visualmente el área
     }
+
     .boton,
     .boton-eliminar {
-        margin: 0;
+        padding: 0.8rem 2rem; // Aumenta el padding para mejorar la interacción
+        font-size: 1.6rem; // Tamaño de fuente adecuado para botones
+        margin: 0.5rem; // Margen para espaciar los botones individualmente
+        width: auto; // Permite que el tamaño del botón se ajuste al contenido
+        transition: background-color 0.3s, transform 0.2s; // Transición para feedback visual
+
+        &:hover {
+            transform: translateY(-2px); // Eleva el botón ligeramente al pasar el ratón
+            background-color: lighten(v.$azul, 10%); // Ilumina el color al pasar el ratón
+        }
     }
 }

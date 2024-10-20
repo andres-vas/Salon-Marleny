@@ -2,17 +2,36 @@
 @use 'base/mixins' as m;
 
 .paginacion {
-    padding: v.$separacion 0;
+    padding: v.$separacion 0; // Uso de la variable de separación para un espaciado vertical consistente
 
     @include m.telefono {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; // Distribución uniforme en dispositivos móviles
+        flex-wrap: wrap; // Permite que los elementos se ajusten adecuadamente en múltiples líneas si es necesario
     }
     button {
         margin: 0 0 1rem 0;
+        padding: 10px 20px; // Aumenta el área de clic para mejorar la interacción
+        border-radius: 5px; // Bordes redondeados para un diseño más moderno
+        background-color: v.$azul; // Usa el color principal para el botón
+        color: v.$blanco;
+        transition: background-color 0.3s, transform 0.2s; // Transiciones para efectos visuales
+
+        &:hover, &:focus {
+            background-color: darken(v.$azul, 10%); // Oscurecimiento para interacción
+            transform: translateY(-2px); // Elevación leve al interactuar
+        }
     }
 }
 
 .ocultar {
     visibility: hidden;
+    opacity: 0; // Cambio para hacer la transición más suave al ocultar/mostrar
+    transition: visibility 0s 0.3s, opacity 0.3s ease; // Transición para ocultar con un efecto de desvanecimiento
+
+    &.visible {
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s 0s, opacity 0.3s ease; // Asegura que se muestre instantáneamente y desvanece correctamente
+    }
 }

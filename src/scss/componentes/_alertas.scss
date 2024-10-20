@@ -2,21 +2,27 @@
 @use 'base/mixins' as m;
 
 .alerta {
-    padding: calc(v.$separacion / 4);
-    color: v.$blanco;
+    padding: calc(v.$separacion / 4); // Ajusta el padding usando la variable de separación
+    color: v.$blanco; // Texto blanco para contraste
     width: 100%;
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem; // Separación consistente
     text-align: center;
-    text-transform: uppercase;
-    border-radius: 5px;
+    text-transform: uppercase; // Texto en mayúsculas para énfasis
+    border-radius: 5px; // Bordes suavemente redondeados
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidad
+    transition: background-color 0.3s; // Suaviza el cambio de color de fondo
 
     &.error {
-        background-color: v.$rojo;
+        background-color: #FFE3E3; // Rosa claro para errores, menos agresivo
+        color: #789DBC; // Azul para el texto, para mantener la legibilidad
     }
     &.exito {
-        background-color: v.$verde;
+        background-color: #C9E9D2; // Verde claro para éxito, suave y amigable
+    }
+
+    // Agregar un efecto de hover para interactividad, aunque las alertas normalmente no son interactivas
+    &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 }
-
-

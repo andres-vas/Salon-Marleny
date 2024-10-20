@@ -3,7 +3,26 @@
 
 .boton {
     @include m.boton(v.$azul, v.$blanco);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; // Transiciones suaves para el color de fondo y sombra
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra ligera para dar profundidad
+
+    &:hover, &:focus {
+        background-color: darken(v.$azul, 10%); // Oscurece el azul en hover/focus
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Sombra más pronunciada para hover/focus
+        color: lighten(v.$blanco, 10%); // Ligeramente más claro para mantener contraste
+        text-decoration: none; // Asegura que no haya subrayado
+    }
 }
+
 .boton-eliminar {
     @include m.boton(v.$rojo, v.$blanco);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; // Transiciones suaves para el color de fondo y sombra
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra ligera para dar profundidad
+
+    &:hover, &:focus {
+        background-color: darken(v.$rojo, 10%); // Oscurece el rojo en hover/focus
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Sombra más pronunciada para hover/focus
+        color: lighten(v.$blanco, 10%); // Ligeramente más claro para mantener contraste
+        text-decoration: none; // Asegura que no haya subrayado
+    }
 }

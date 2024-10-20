@@ -1,28 +1,67 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 
+.nombre-pagina {
+    color: #789DBC; // Azul para el título
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.descripcion-pagina {
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 .formulario {
-    margin-top: 5rem;
-    width: 100%;
+    background-color: #FEF9F2; // Fondo crema para el formulario
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .campo {
     display: flex;
+    flex-direction: column;
     margin-bottom: 2rem;
-    align-items: center;
+
     label {
-        flex: 0 0 10rem;
+        color: #789DBC; // Azul para las etiquetas
+        margin-bottom: 0.5rem;
     }
     input {
-        flex: 1;
-        border: none;
-        padding: calc(v.$separacion / 4);
+        border: 1px solid #789DBC;
+        padding: 10px;
         border-radius: 1rem;
+    }
+}
 
-        &:disabled {
-            background-color: lighten(v.$negro, 30%);
-            color: v.$blanco;
-            cursor: not-allowed;
+input[type="submit"] {
+    background-color: #789DBC;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: darken(#789DBC, 10%);
+    }
+}
+
+.acciones {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    a {
+        color: #C9E9D2; // Verde claro para enlaces
+        &:hover {
+            text-decoration: underline;
         }
     }
 }

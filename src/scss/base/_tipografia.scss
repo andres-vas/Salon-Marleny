@@ -1,36 +1,46 @@
 @use 'variables' as v;
 
+// Estilos base para encabezados
 h1, h2, h3 {
     font-family: v.$fuente_principal;
-    margin: 0 0 calc(v.$separacion / 2) 0 ;
-    font-weight: 900;
+    margin: 0 0 calc(v.$separacion / 2) 0;
+    font-weight: v.$black; // Utiliza la variable correcta para el peso de fuente
     color: v.$blanco;
     text-align: center;
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 4rem; // Tamaño grande para títulos principales
 }
+
 h2 {
-    font-size: 3.6rem;
+    font-size: 3.6rem; // Ligeramente más pequeño para subtitulares
 }
+
 h3 {
-    font-size: 3rem;
-    text-align: center;
+    font-size: 3rem; // Adecuado para secciones importantes
 }
+
+// Estilos para párrafos
 p {
     color: v.$blanco;
-    font-size: 2rem;
+    font-size: 1.6rem; // Tamaño estándar para mejorar la legibilidad
+    line-height: 1.8; // Espaciado de línea para mejor legibilidad
+    margin-bottom: 1rem; // Margen para separar visualmente los párrafos
 }
 
-// ---- NUEVO CSS PARA LAS PAGINAS ----
-
-.nombre-pagina{
+// Estilos específicos para clases de página
+.nombre-pagina {
     text-align: center;
-    margin: 5rem 0;
+    margin-top: 5rem; // Aumenta el margen superior para dar más espacio
+    margin-bottom: 1rem; // Reduce el margen inferior para un agrupamiento visual con la descripción
+    font-size: 3rem; // Tamaño específico para destacar el nombre de la página
     font-weight: v.$bold;
 }
 
-.descripcion-pagina{
+.descripcion-pagina {
     text-align: center;
+    font-size: 2rem; // Tamaño adecuado para complementar el nombre de la página
+    color: v.$gris-claro; // Un color más suave que el blanco para la descripción
+    margin-bottom: 3rem; // Espacio antes del contenido principal
 }

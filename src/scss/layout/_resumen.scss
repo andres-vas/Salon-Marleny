@@ -2,21 +2,32 @@
 
 .contenido-resumen {
     p {
-        margin-bottom: 1rem;
+        margin-bottom: 1rem; // Espaciado adecuado entre párrafos para mejorar la legibilidad
+        color: v.$gris-oscuro; // Mejora el contraste sobre fondos claros
+        font-size: 1.6rem; // Tamaño estándar para la lectura cómoda
+        line-height: 1.8; // Espacio entre líneas para facilitar la lectura
     }
 
     span {
-        color: v.$azul;
-        font-weight: v.$bold;
-        font-size: 2.4rem;
+        color: v.$azul; // Color distintivo para elementos importantes
+        font-weight: v.$bold; // Resalta más visualmente los spans
+        font-size: 2.4rem; // Tamaño aumentado para destacar la información clave
+        display: block; // Bloque para dar énfasis y separación visual
+        margin-bottom: 1rem; // Margen para separar del texto adyacente
     }
 }
+
 .contenedor-servicio {
-    padding: 3rem 0;
-    border-bottom: 1px solid v.$gris;
+    padding: 3rem 0; // Espaciado vertical generoso para una clara separación de secciones
+    border-bottom: 1px solid v.$gris-claro; // Utiliza gris claro para suavizar el borde
+    transition: background-color 0.3s ease; // Transición suave para interacciones
+
+    &:hover {
+        background-color: v.$gris-claro; // Cambio sutil de fondo al pasar el ratón
+    }
 
     &:last-of-type {
-        margin-bottom: v.$separacion;
+        border-bottom: none; // Elimina el borde del último elemento para limpiar visualmente
+        margin-bottom: v.$separacion; // Usa la variable de separación para consistencia
     }
 }
-

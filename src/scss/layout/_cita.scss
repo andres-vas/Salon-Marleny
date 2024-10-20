@@ -1,16 +1,30 @@
-
 .seccion {
     padding: 5rem 0;
-    display: none;
+    display: none; // Por defecto, las secciones están ocultas
+    transition: opacity 0.3s ease; // Transición suave para el efecto de aparición y desaparición
 
     .text-center {
         text-align: center;
     }
 }
 
+.mostrar,
+.ocultar {
+    transition: opacity 0.3s ease; // Consistencia en las transiciones para todos los cambios de visibilidad
+}
+
 .mostrar {
     display: block;
+    opacity: 1; // Asegura que la sección es completamente visible cuando se muestra
 }
+
 .ocultar {
     display: none;
+    opacity: 0; // Transición suave para la opacidad cuando se oculta
 }
+
+/**
+ * Si necesitas que los elementos se oculten y muestren con una transición más visual,
+ * puedes comentar la propiedad 'display' en .mostrar y .ocultar, y solo manejar la opacidad.
+ * Esto permitirá que la transición de opacidad sea visible.
+ */

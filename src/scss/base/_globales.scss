@@ -2,34 +2,48 @@
 @use 'mixins' as m;
 
 html {
-    font-size: 62.5%;
+    font-size: 62.5%; // Establece la base de REM para que 1rem = 10px
     box-sizing: border-box;
     height: 100%;
 }
+
 body {
     min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: v.$negro; // Fondo oscuro
+    color: v.$blanco; // Texto claro para contraste
+    font-family: v.$fuente_principal; // Fuente principal del proyecto
+    font-size: 1.6rem; // Tamaño de texto base
+    line-height: 1.5; // Mejora la legibilidad
     @include m.tablet {
         height: 100%;
     }
-    display: flex;
-    flex-direction: column;
-    background-color: v.$negro;
-    color: v.$blanco;
-    font-family: v.$fuente_principal;
-    font-size: 1.6rem;
 }
+
 *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: inherit; // Hereda el box-sizing para todos los elementos
 }
+
 .contenedor {
     width: 95%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem 0; // Añade padding para evitar que el contenido toque los bordes
 }
+
 a {
     text-decoration: none;
+    color: v.$azul; // Define un color consistente para los enlaces
+    &:hover, &:focus {
+        color: darken(v.$azul, 10%); // Oscurece el enlace al pasar el mouse o enfocar
+        text-decoration: underline; // Añade subrayado para mejorar la interactividad
+    }
 }
 
 img {
     max-width: 100%;
+    height: auto; // Asegura que las imágenes no se distorsionen
+    display: block; // Elimina cualquier espacio extra bajo la imagen
 }
+

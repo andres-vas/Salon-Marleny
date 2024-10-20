@@ -61,6 +61,22 @@
             </div>
             <input type="hidden" id="id" value="<?php echo $id; ?>" >
 
+            <div class="campo">
+                <label for="tipoPagoId">Metodo de Pago</label>
+                <select id="tipoPagoId" name="tipoPagoId" required>
+                    <option value="">-- Metodos de Pago Disponibles --</option>
+                    <?php foreach ($tipopagos as $tipo) { ?>
+                        <option 
+                            value="<?php echo $tipo->id; ?>" 
+                            <?php echo (isset($cita->tipoPagoId) && $cita->tipoPagoId == $tipo->id) ? 'selected' : ''; ?>>
+                            <?php echo $tipo->nombre_tipopago; ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+
+
+
         </form>
     </div>
     <div id="paso-4" class="seccion contenido-resumen">

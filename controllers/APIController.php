@@ -25,6 +25,13 @@ class APIController {
         $cita = new Cita($_POST);
         $resultado = $cita->guardar();
         $id = $resultado['id'];
+
+        // Agregar tipoPagoId en la cita
+        if (isset($_POST['tipoPagoId'])) {
+            $cita->tipoPagoId = $_POST['tipoPagoId'];
+            $cita->guardar();
+        }
+
     
         // Almacena los Servicios con el ID de la Cita, si existen
         if (isset($_POST['servicios']) && !empty($_POST['servicios'])) {

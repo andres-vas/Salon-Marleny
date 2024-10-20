@@ -28,7 +28,8 @@ function iniciarApp() {
     idCliente();
     nombreCliente(); // Añade el nombre del cliente al objeto de cita
     seleccionarFecha(); // Añade la fecha de la cita en el objeto
-    seleccionarHora(); // Añade la hora de la cita en el objeto
+    seleccionarHora(); // Añade la hora de la cita en el objeto\
+    seleccionarTipoPago();
 
     mostrarResumen(); // Muestra el resumen de la cita
 }
@@ -406,8 +407,17 @@ function mostrarResumen() {
 }
 
 
+function seleccionarTipoPago() {
+    const inputTipoPago = document.querySelector('#tipoPagoId');
+    inputTipoPago.addEventListener('change', function(e) {
+        cita.tipoPagoId = e.target.value; // Guardar el tipo de pago en el objeto cita
+    });
+}
+
+
+
 async function reservarCita() {
-    const { nombre, fecha, hora, servicios, productos, id } = cita;
+    const { nombre, fecha, hora, servicios, productos, id, tipoPagoId } = cita;
 
     const idServicios = servicios.map(servicio => servicio.id);
     const idProductos = productos.map(producto => producto.id);
@@ -417,7 +427,8 @@ async function reservarCita() {
     datos.append('fecha', fecha);
     datos.append('hora', hora);
     datos.append('usuarioId', id);
-    
+    datos.append('tipoPagoId', tipoPagoId); // Agregar tipo de pago
+
     // Enviar servicios como un array
     if (idServicios.length > 0) {
         idServicios.forEach(servicioId => datos.append('servicios[]', servicioId));

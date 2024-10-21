@@ -25,20 +25,6 @@
 
 
 <div class="campo">
-    <label for="id_promocion_producto">Promocion para el Producto</label>
-    <select id="id_promocion_producto" name="id_promocion_producto" required>
-        <option value="">-- Selecciona una Promocion --</option>
-        <?php foreach ($promociones as $tipo) { ?>
-            <option 
-                value="<?php echo $tipo->id; ?>" 
-                <?php echo $producto->id_promocion_producto == $tipo->id ? 'selected' : ''; ?>>
-                <?php echo $tipo->descripcion_promocion; ?>
-            </option>
-        <?php } ?>
-    </select>
-</div>
-
-<div class="campo">
     <label for="descripcion_producto">Descripcion</label>
     <input 
         type="text"

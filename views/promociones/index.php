@@ -4,12 +4,16 @@
 <?php
     include_once __DIR__ . '/../templates/barra.php';
     use Model\Tipo_descuento;  // Asegúrate de importar el modelo aquí
+    use Model\Servicio;  // Asegúrate de importar el modelo aquí
+    use Model\Producto;  // Asegúrate de importar el modelo aquí
 ?>
 
 <ul class="promociones">
     <?php foreach($promociones as $promocion) { 
         // Obtener el tipo de descuento correspondiente a la promoción
         $tipoDescuento = Tipo_descuento::find($promocion->id_tipo_descuento);
+        $Productos = Producto::find($promocion->producto_id);
+        $Servicios = Servicio::find($promocion->servicio_id);
     ?>
         <li>
             <p>Código Promoción: <span><?php echo $promocion->id; ?></span> </p>
@@ -18,8 +22,15 @@
             <p>Fecha Fin Promoción: <span><?php echo $promocion->fecha_fin_promocion; ?></span> </p>
 
             <p>Tipo Descuento: 
-                <span>S<?php echo $tipoDescuento->id; ?></span> - 
                 <span>Descripción: <?php echo $tipoDescuento->descripcion_descuento; ?></span>
+            </p>
+
+            <p>Producto: 
+                <span><?php echo $Productos->name_producto; ?></span>
+            </p>
+
+            <p>Servicio: 
+                <span><?php echo $Servicios->nombre; ?></span>
             </p>
 
             <p>Estado Promoción: 

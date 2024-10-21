@@ -45,6 +45,44 @@
     </select>
 </div>
 
+<div class="campo">
+    <label for="producto_id">Producto</label>
+    <select id="producto_id" name="producto_id" required>
+        <option value="">-- Selecciona un Producto --</option>
+        <?php foreach ($productos as $tipo) { ?>
+            <option 
+                value="<?php echo $tipo->id; ?>" 
+                <?php echo $promocion->producto_id == $tipo->id ? 'selected' : ''; ?>>
+                <?php echo $tipo->name_producto; ?>
+            </option>
+        <?php } ?>
+    </select>
+</div>
+
+<div class="campo">
+    <label for="servicio_id">Servicio</label>
+    <select id="servicio_id" name="servicio_id" required>
+        <option value="">-- Selecciona un Servicio --</option>
+        <?php foreach ($servicios as $tipo) { ?>
+            <option 
+                value="<?php echo $tipo->id; ?>" 
+                <?php echo $promocion->servicio_id == $tipo->id ? 'selected' : ''; ?>>
+                <?php echo $tipo->nombre; ?>
+            </option>
+        <?php } ?>
+    </select>
+</div>
+<div class="campo">
+    <label for="precio_promocion">Precio Promocion</label>
+    <input 
+        type="text"
+        id="precio_promocion"
+        placeholder="Precio"
+        name="precio_promocion"
+        value="<?php echo $promocion->precio_promocion; ?>"
+    />
+</div>
+
 
 <div class="campo">
     <label for="activo_descuento">Estado</label>

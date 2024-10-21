@@ -4,7 +4,6 @@
 <?php
     include_once __DIR__ . '/../templates/barra.php';
     use Model\Productos;  // Asegúrate de importar el modelo aquí
-    use Model\Promocion;  // Importación del modelo
 use Model\Marca;  // Importación del modelo
 ?>
 
@@ -12,8 +11,6 @@ use Model\Marca;  // Importación del modelo
     <?php foreach($productos as $producto) { 
         // OBTENER LA MARCA
         $marca = Marca::find($producto->id_marca_producto);
-        // OBTENER LA PROMOCION
-        $promocion = Promocion::find($producto->id_promocion_producto);
     ?>
     
         <li>
@@ -22,11 +19,6 @@ use Model\Marca;  // Importación del modelo
             <p>Marca: 
                 <span><?php echo $marca->id; ?></span> - 
                 <span>Nombre: <?php echo $marca->nombre_marca; ?></span>
-            </p>
-
-            <p>Promocion: 
-                <span><?php echo $promocion->id; ?></span> - 
-                <span>Descripcion: <?php echo $promocion->descripcion_promocion; ?></span>
             </p>
 
             <p>Precio Producto: <span>Q. <?php echo $producto->precio_producto; ?></span> </p>

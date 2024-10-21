@@ -24,7 +24,7 @@ class Promocion extends ActiveRecord {
         $this->id_tipo_descuento = $args['id_tipo_descuento'] ?? '';
         $this->activo_descuento = $args['activo_descuento'] ?? '';
         $this->producto_id = $args['producto_id'] ?? '';
-        $this->servicio_id = $args['producto_id'] ?? '';
+        $this->servicio_id = $args['servicio_id'] ?? '';
         $this->precio_promocion = $args['precio_promocion'] ?? '';
     }
 

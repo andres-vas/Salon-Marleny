@@ -23,6 +23,7 @@ function iniciarApp() {
     paginaSiguiente(); 
     paginaAnterior();
 
+
     consultarAPI(); // Consulta la API en el backend de PHP
     consultarProductosAPI(); // Consulta la API en el backend de PHP
     consultarPromocionesAPI(); // Consulta la API en el backend de PHP
@@ -254,37 +255,65 @@ function seleccionarProducto(producto) {
 
 
 // RELACIOADO CON LOS PROMOCIONES 
-function mostrarPromociones(promociones) {
-    promociones.forEach( promocion => {
-        const {id, descripcion_promocion, fecha_inicio_promocion,  fecha_fin_promocion, id_tipo_descuento, producto_id, servicio_id} = promocion;
+async function mostrarPromociones(promociones) {
+    try {
+        // Obtener productos y servicios de sus respectivas APIs
+        const urlProductos = 'http://localhost:3000/api/productos';
+        const urlServicios = 'http://localhost:3000/api/servicios';
 
-        const nombrePromo = document.createElement('P');
-        nombrePromo.classList.add('name-promocion');
-        nombrePromo.textContent = descripcion_promocion;
+        // Obtener los productos y servicios
+        const [productosRes, serviciosRes] = await Promise.all([
+            fetch(urlProductos),
+            fetch(urlServicios)
+        ]);
 
-        const nombreProducto = document.createElement('P');
-        nombreProducto.classList.add('nombre-producto');
-        nombreProducto.textContent = `Q.${producto_id}`;
+        const productos = await productosRes.json();
+        const servicios = await serviciosRes.json();
 
-        const nombreServicio = document.createElement('P');
-        nombreServicio.classList.add('nombre-servicio');
-        nombreServicio.textContent = `Q.${servicio_id}`;
+        // Mostrar las promociones
+        promociones.forEach(promocion => {
+            const { id, descripcion_promocion, producto_id, servicio_id,  precio_promocion } = promocion;
 
-        const promocionDiv = document.createElement('DIV');
-        promocionDiv.classList.add('promocion');
-        promocionDiv.dataset.idPromocion = id;
-        promocionDiv.onclick = function() {
-            seleccionarPromocion(promocion);
-        }
+            // Buscar el producto y servicio por ID
+            const producto = productos.find(prod => prod.id === producto_id);
+            const servicio = servicios.find(serv => serv.id === servicio_id);
 
-        promocionDiv.appendChild(nombrePromo);
-        promocionDiv.appendChild(nombreProducto);
-        promocionDiv.appendChild(nombreServicio);
+            // Crear elementos para mostrar la promoción
+            const nombrePromo = document.createElement('P');
+            nombrePromo.classList.add('name-promocion');
+            nombrePromo.textContent = descripcion_promocion;
 
-        document.querySelector('#promociones').appendChild(promocionDiv);
+            const nombreProducto = document.createElement('P');
+            nombreProducto.classList.add('nombre-producto');
+            nombreProducto.textContent = producto ? producto.name_producto : 'Producto no disponible';
 
-    });
+            const nombreServicio = document.createElement('P');
+            nombreServicio.classList.add('nombre-servicio');
+            nombreServicio.textContent = servicio ? servicio.nombre : 'Servicio no disponible';
+
+            const precioPromocion = document.createElement('P');
+            precioPromocion.classList.add('precio-promocion');
+            precioPromocion.textContent = `Q.${precio_promocion}`;
+
+            const promocionDiv = document.createElement('DIV');
+            promocionDiv.classList.add('promocion');
+            promocionDiv.dataset.idPromocion = id;
+            promocionDiv.onclick = function() {
+                seleccionarPromocion(promocion);
+            }
+
+            promocionDiv.appendChild(nombrePromo);
+            promocionDiv.appendChild(nombreProducto);
+            promocionDiv.appendChild(nombreServicio);
+            promocionDiv.appendChild(precioPromocion);
+
+            document.querySelector('#promociones').appendChild(promocionDiv);
+        });
+    } catch (error) {
+        console.log('Error al mostrar promociones:', error);
+    }
 }
+
 
 function seleccionarPromocion(promocion) {
     const { id } = promocion;
@@ -370,7 +399,6 @@ function mostrarAlerta(mensaje, tipo, elemento, desaparece = true) {
             alerta.remove();
         }, 3000);
     }
-  
 }
 
 
@@ -385,10 +413,10 @@ function mostrarResumen() {
     const { nombre, fecha, hora, servicios, productos, promociones } = cita;
 
     // Verificar si se seleccionaron servicios o productos
-    if (Object.values(cita).includes('') || (servicios.length === 0 && productos.length === 0 && promociones.length === 0)) {
+    /*if (Object.values(cita).includes('') || (servicios.length === 0 && productos.length === 0 && promociones.length === 0)) {
         mostrarAlerta('Debes seleccionar al menos un servicio o producto, y completar fecha y hora', 'error', '.contenido-resumen', false);
         return;
-    }
+    }*/
 
     // Mostrar resumen de Servicios si hay alguno
     if (servicios.length > 0) {
@@ -445,14 +473,19 @@ function mostrarResumen() {
         resumen.appendChild(headingPromociones);
 
         promociones.forEach(promocion => {
-            const { id, descripcion_promocion, fecha_inicio_promocion,  fecha_fin_promocion, id_tipo_descuento, producto_id, servicio_id } = promocion;
+            const { id, descripcion_promocion, fecha_inicio_promocion,  fecha_fin_promocion, id_tipo_descuento, producto_id, servicio_id, precio_promocion } = promocion;
             const contenedorPromocion = document.createElement('DIV');
             contenedorPromocion.classList.add('contenedor-promocion');
 
             const textoPromocion = document.createElement('P');
             textoPromocion.textContent = descripcion_promocion;
 
+            const precioPromocion = document.createElement('P');
+            precioPromocion.innerHTML = `<span>Precio:</span> Q${precio_promocion}`;
+
+
             contenedorPromocion.appendChild(textoPromocion);
+            contenedorPromocion.appendChild(precioPromocion);
 
             resumen.appendChild(contenedorPromocion);
         });

@@ -42,14 +42,15 @@
                     <p>Email: <span><?php echo $cita->email; ?></span></p>
                     <p>Telefono: <span><?php echo $cita->telefono; ?></span></p>
 
-                    <h3>Servicios y Productos</h3>
+                    <h3>Servicios  -  Productos  -  Promociones</h3>
             <?php 
                 $idCita = $cita->id;
             } // Fin de IF 
-                $total += ($cita->precio + $cita->precioPro);
+                $total += ($cita->precio + $cita->precioPro + $cita->precio_promocion );
             ?>
                     <p class="servicio"><?php echo $cita->servicio . " " . $cita->precio; ?></p>
                     <p class="servicio"><?php echo $cita->nombrePro . " " . $cita->precioPro; ?></p>
+                    <p class="servicio"><?php echo $cita->descripcion_promocion . " " . $cita->precio_promocion; ?></p>
 
             <?php 
                 $actual = $cita->id;

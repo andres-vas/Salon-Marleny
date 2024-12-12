@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Model\Promocion;
 use Model\Tipo_descuento;  // Importación del modelo
+use Model\Producto;  // Importación del modelo
+use Model\Servicio;  // Importación del modelo
 use MVC\Router;
 
 class PromocionController {
@@ -27,6 +29,8 @@ class PromocionController {
 
         // Obtener los tipos de descuentos
         $tiposDescuentos = Tipo_descuento::all();
+        $Productos = Producto::all();
+        $Servicios = Servicio::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $promocion->sincronizar($_POST);
@@ -43,6 +47,8 @@ class PromocionController {
             'nombre' => $_SESSION['nombre'],
             'promocion' => $promocion,
             'tiposDescuentos' => $tiposDescuentos,
+            'productos' => $Productos,
+            'servicios' => $Servicios,
             'alertas' => $alertas
         ]);
     }
@@ -58,6 +64,8 @@ class PromocionController {
 
         // Obtener los tipos de descuentos
         $tiposDescuentos = Tipo_descuento::all();
+        $Productos = Producto::all();
+        $Servicios = Servicio::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $promocion->sincronizar($_POST);
@@ -74,6 +82,8 @@ class PromocionController {
             'nombre' => $_SESSION['nombre'],
             'promocion' => $promocion,
             'tiposDescuentos' => $tiposDescuentos,
+            'productos' => $Productos,
+            'servicios' => $Servicios,
             'alertas' => $alertas
         ]);
     }

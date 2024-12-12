@@ -4,7 +4,7 @@ namespace Model;
 
 class Promocion extends ActiveRecord {
     protected static $tabla = 'promocion';
-    protected static $columnasDB = ['id', 'descripcion_promocion', 'fecha_inicio_promocion', 'fecha_fin_promocion', 'id_tipo_descuento', 'activo_descuento', 'producto_id','servicio_id'];
+    protected static $columnasDB = ['id', 'descripcion_promocion', 'fecha_inicio_promocion', 'fecha_fin_promocion', 'id_tipo_descuento', 'activo_descuento', 'producto_id','servicio_id', 'precio_promocion'];
 
     public $id;
     public $descripcion_promocion;
@@ -14,6 +14,7 @@ class Promocion extends ActiveRecord {
     public $activo_descuento;
     public $producto_id;
     public $servicio_id;
+    public $precio_promocion;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
@@ -23,7 +24,8 @@ class Promocion extends ActiveRecord {
         $this->id_tipo_descuento = $args['id_tipo_descuento'] ?? '';
         $this->activo_descuento = $args['activo_descuento'] ?? '';
         $this->producto_id = $args['producto_id'] ?? '';
-        $this->servicio_id = $args['producto_id'] ?? '';
+        $this->servicio_id = $args['servicio_id'] ?? '';
+        $this->precio_promocion = $args['precio_promocion'] ?? '';
     }
 
     public function validar() {
@@ -46,6 +48,9 @@ class Promocion extends ActiveRecord {
         }
         if (!$this->servicio_id) {
             self::$alertas['error'][] = 'El tipo de descuento es obligatorio';
+        }
+        if (!$this->precio_promocion) {
+            self::$alertas['error'][] = 'El precio de la promocion es importante';
         }
 
         return self::$alertas;
